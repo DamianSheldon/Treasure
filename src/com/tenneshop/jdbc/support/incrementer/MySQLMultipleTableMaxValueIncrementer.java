@@ -25,6 +25,10 @@ import org.springframework.jdbc.support.incrementer.AbstractColumnMaxValueIncrem
  */
 public class MySQLMultipleTableMaxValueIncrementer extends AbstractColumnMaxValueIncrementer {
 
+	public static final String DEFAULT_INCREMENTER_NAME = "tab_sequence";
+	
+	public static final String DEFAULT_COLUMN_NAME_OF_TABLE = "tab";
+
 	/** The next id to serve. */
 	private long nextId = 0;
 
