@@ -125,11 +125,13 @@
 	<name>Treasure</name>
 	<description>The treasures I have accumulated in my daily java development. It can help other people face the same problem.</description>
 	<url>https://github.com/DamianSheldon/Treasure</url>
-	<license>
-		<name>MIT License</name>
-		<url>http://www.opensource.org/licenses/mit-license.php</url>
-		<distribution>repo</distribution>
-	</license>
+	<licenses>
+		<license>
+			<name>MIT License</name>
+			<url>http://www.opensource.org/licenses/mit-license.php</url>
+			<distribution>repo</distribution>
+		</license>
+	</licenses>
 	<developers>
 		<developer>
 			<id>meiliang</id>
