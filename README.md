@@ -1,2 +1,2 @@
 # Treasure
-The treasures I collect in my daily java development.
+The treasures I have accumulated in my daily java development.
