@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.damiansheldon</groupId>
 	<artifactId>treasure</artifactId>
-	<version>0.0.2-SNAPSHOT</version>
+	<version>0.0.2</version>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
@@ -120,4 +120,27 @@
 			</build>
 		</profile>
 	</profiles>
+
+	<!-- More Project Information -->
+	<name>Treasure</name>
+	<description>The treasures I have accumulated in my daily java development. It can help other people face the same problem.</description>
+	<url>https://github.com/DamianSheldon/Treasure</url>
+	<license>
+		<name>MIT License</name>
+		<url>http://www.opensource.org/licenses/mit-license.php</url>
+		<distribution>repo</distribution>
+	</license>
+	<developers>
+		<developer>
+			<id>meiliang</id>
+			<name>Meiliang Dong</name>
+			<email>dongmeilianghy@sina.com</email>
+			<url>http://damiansheldon.github.io</url>
+			<roles>
+				<role>architect</role>
+				<role>developer</role>
+			</roles>
+			<timezone>Asia/Shanghai</timezone>
+		</developer>
+	</developers>
 </project>
