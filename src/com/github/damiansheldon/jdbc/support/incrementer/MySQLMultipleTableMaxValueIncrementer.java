@@ -1,4 +1,4 @@
-package com.tenneshop.jdbc.support.incrementer;
+package com.github.damiansheldon.jdbc.support.incrementer;
 
 import java.sql.Connection;
 import java.sql.ResultSet;
