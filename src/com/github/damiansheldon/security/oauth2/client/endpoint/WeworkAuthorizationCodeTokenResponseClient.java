@@ -24,36 +24,41 @@ import org.springframework.web.client.RestTemplate;
 
 import com.github.damiansheldon.security.oauth2.http.converter.WeworkOAuth2AccessTokenResponseConverter;
 
-public class WeworkAuthorizationCodeTokenResponseClient implements OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> {
+public class WeworkAuthorizationCodeTokenResponseClient
+		implements OAuth2AccessTokenResponseClient<OAuth2AuthorizationCodeGrantRequest> {
 	private static final Log log = LogFactory.getLog(WeworkAuthorizationCodeTokenResponseClient.class);
 
 	private static final String INVALID_TOKEN_RESPONSE_ERROR_CODE = "invalid_token_response";
 
 	private OAuth2AccessTokenResponse cachedOAuth2AccessTokenResponse;
-	
-	private Converter<OAuth2AuthorizationCodeGrantRequest, RequestEntity<?>> requestEntityConverter =
-			new WeworkOAuth2AuthorizationCodeGrantRequestEntityConverter();
+
+	private Converter<OAuth2AuthorizationCodeGrantRequest, RequestEntity<?>> requestEntityConverter = new WeworkOAuth2AuthorizationCodeGrantRequestEntityConverter();
 
 	private RestOperations restOperations;
 
 	public WeworkAuthorizationCodeTokenResponseClient() {
 		OAuth2AccessTokenResponseHttpMessageConverter converter = new OAuth2AccessTokenResponseHttpMessageConverter();
 		converter.setTokenResponseConverter(new WeworkOAuth2AccessTokenResponseConverter());
-		
-		RestTemplate restTemplate = new RestTemplate(Arrays.asList(
-				new FormHttpMessageConverter(), converter));
+
+		RestTemplate restTemplate = new RestTemplate(Arrays.asList(new FormHttpMessageConverter(), converter));
 		restTemplate.setErrorHandler(new OAuth2ErrorResponseErrorHandler());
 		this.restOperations = restTemplate;
 	}
-	
+
 	@Override
 	public OAuth2AccessTokenResponse getTokenResponse(OAuth2AuthorizationCodeGrantRequest authorizationGrantRequest) {
 		Assert.notNull(authorizationGrantRequest, "authorizationCodeGrantRequest cannot be null");
-		if (cachedOAuth2AccessTokenResponse != null && !isOAuth2AccessTokenExpire(cachedOAuth2AccessTokenResponse)) {			
+		if (cachedOAuth2AccessTokenResponse != null && !isOAuth2AccessTokenExpire(cachedOAuth2AccessTokenResponse)) {
 			return cachedOAuth2AccessTokenResponse;
 		}
-		
-		// Fetch new OAuth2 access token
+
+		cachedOAuth2AccessTokenResponse = fetchNewOauth2AccessToken(authorizationGrantRequest);
+
+		return cachedOAuth2AccessTokenResponse;
+	}
+
+	public OAuth2AccessTokenResponse fetchNewOauth2AccessToken(
+			OAuth2AuthorizationCodeGrantRequest authorizationGrantRequest) {
 		RequestEntity<?> request = this.requestEntityConverter.convert(authorizationGrantRequest);
 
 		ResponseEntity<OAuth2AccessTokenResponse> response;
@@ -61,9 +66,11 @@ public class WeworkAuthorizationCodeTokenResponseClient implements OAuth2AccessT
 			response = this.restOperations.exchange(request, OAuth2AccessTokenResponse.class);
 		} catch (RestClientException ex) {
 			log.warn("获取 Access token 调用失败", ex);
-			
+
 			OAuth2Error oauth2Error = new OAuth2Error(INVALID_TOKEN_RESPONSE_ERROR_CODE,
-					"An error occurred while attempting to retrieve the OAuth 2.0 Access Token Response: " + ex.getMessage(), null);
+					"An error occurred while attempting to retrieve the OAuth 2.0 Access Token Response: "
+							+ ex.getMessage(),
+					null);
 			throw new OAuth2AuthorizationException(oauth2Error, ex);
 		}
 
@@ -75,24 +82,23 @@ public class WeworkAuthorizationCodeTokenResponseClient implements OAuth2AccessT
 			// If AccessTokenResponse.scope is empty, then default to the scope
 			// originally requested by the client in the Token Request
 			tokenResponse = OAuth2AccessTokenResponse.withResponse(tokenResponse)
-					.scopes(authorizationGrantRequest.getClientRegistration().getScopes())
-					.build();
+					.scopes(authorizationGrantRequest.getClientRegistration().getScopes()).build();
 		}
-				
-		cachedOAuth2AccessTokenResponse = tokenResponse;
+		
+		log.debug(tokenResponse);
 		
 		return tokenResponse;
 	}
-	
+
 	private boolean isOAuth2AccessTokenExpire(OAuth2AccessTokenResponse accessTokenResponse) {
 		if (accessTokenResponse == null) {
 			return true;
 		}
-		
+
 		if (accessTokenResponse.getAccessToken() == null) {
 			return true;
 		}
-		
+
 		Instant expiresAt = accessTokenResponse.getAccessToken().getExpiresAt();
 		Instant now = Instant.now();
 
