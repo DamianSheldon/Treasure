@@ -84,9 +84,7 @@ public class WeworkAuthorizationCodeTokenResponseClient
 			tokenResponse = OAuth2AccessTokenResponse.withResponse(tokenResponse)
 					.scopes(authorizationGrantRequest.getClientRegistration().getScopes()).build();
 		}
-		
-		log.debug(tokenResponse);
-		
+				
 		return tokenResponse;
 	}
 
