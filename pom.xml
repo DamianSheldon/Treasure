@@ -4,7 +4,7 @@
 	<modelVersion>4.0.0</modelVersion>
 	<groupId>com.github.damiansheldon</groupId>
 	<artifactId>treasure</artifactId>
-	<version>0.0.5</version>
+	<version>0.0.6-SNAPSHOT</version>
 	<build>
 		<sourceDirectory>src</sourceDirectory>
 		<plugins>
@@ -70,6 +70,10 @@
 		<dependency>
 			<groupId>org.springframework.security</groupId>
 			<artifactId>spring-security-oauth2-client</artifactId>
+		</dependency>
+		<dependency>
+			<groupId>javax.validation</groupId>
+			<artifactId>validation-api</artifactId>
 		</dependency>
 	</dependencies>
 	<distributionManagement>
