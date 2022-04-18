@@ -9,7 +9,6 @@ import org.aspectj.lang.annotation.AfterReturning;
 import org.aspectj.lang.annotation.Aspect;
 import org.springframework.boot.web.error.ErrorAttributeOptions;
 import org.springframework.boot.web.servlet.error.ErrorAttributes;
-import org.springframework.stereotype.Component;
 import org.springframework.web.context.request.WebRequest;
 
 /**
@@ -17,7 +16,6 @@ import org.springframework.web.context.request.WebRequest;
  *
  * @date 2021/12/29
  */
-@Component
 @Aspect
 public class StackTraceLogAfterReturningAspect extends AbstractStackTraceLogAspect {
 
