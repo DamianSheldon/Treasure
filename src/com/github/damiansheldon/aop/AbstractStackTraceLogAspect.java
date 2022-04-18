@@ -35,12 +35,15 @@ abstract public class AbstractStackTraceLogAspect {
 			if (!retVal.containsKey("trace")) {
 				Throwable error = this.errorAttributes.getError(webRequest);
 
-				StringWriter stackTrace = new StringWriter();
-				error.printStackTrace(new PrintWriter(stackTrace));
-				stackTrace.flush();
+				if (error != null) {
+					StringWriter stackTrace = new StringWriter();
+					error.printStackTrace(new PrintWriter(stackTrace));
+					stackTrace.flush();
 
-				logResult = new LinkedHashMap<>(retVal);
-				logResult.put("trace", stackTrace.toString());
+					logResult = new LinkedHashMap<>(retVal);
+					logResult.put("trace", stackTrace.toString());	
+				}
+				
 			}
 
 			logger.warn(logResult.toString());
