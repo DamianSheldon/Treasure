@@ -63,17 +63,6 @@ public class MySQLMultipleTableMaxValueIncrementer extends AbstractColumnMaxValu
 		this.columnValueOfTable = columnValueOfTable;
 	}
 
-	/**
-	 * Set whether to use a new connection for the incrementer.
-	 * <p>{@code true} is necessary to support transactional storage engines,
-	 * using an isolated separate transaction for the increment operation.
-	 * {@code false} is sufficient if the storage engine of the sequence table
-	 * is non-transactional (like MYISAM), avoiding the effort of acquiring an
-	 * extra {@code Connection} for the increment operation.
-	 * <p>Default is {@code true} since Spring Framework 5.0.
-	 * @since 4.3.6
-	 * @see DataSource#getConnection()
-	 */
 	public void setUseNewConnection(boolean useNewConnection) {
 		this.useNewConnection = useNewConnection;
 	}

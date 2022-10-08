@@ -18,9 +18,6 @@ import org.springframework.web.context.request.WebRequest;
 @Aspect
 public class BeforeV230StackTraceLogAfterReturningAspect extends AbstractStackTraceLogAspect {
 
-	/**
-	 * @param errorAttributes
-	 */
 	public BeforeV230StackTraceLogAfterReturningAspect(ErrorAttributes errorAttributes) {
 		super(errorAttributes);
 	}
