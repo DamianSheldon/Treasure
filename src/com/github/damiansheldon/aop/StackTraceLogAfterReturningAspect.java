@@ -14,7 +14,7 @@ import org.springframework.web.context.request.WebRequest;
 /**
  * @author meiliang
  *
- * @date 2021/12/29
+ * date 2021/12/29
  */
 @Aspect
 public class StackTraceLogAfterReturningAspect extends AbstractStackTraceLogAspect {
